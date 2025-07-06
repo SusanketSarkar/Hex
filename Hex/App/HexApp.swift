@@ -5,7 +5,7 @@ import SwiftUI
 
 @main
 struct HexApp: App {
-	static let appStore = Store(initialState: AppFeature.State()) {
+	static let appStore: StoreOf<AppFeature> = Store(initialState: AppFeature.State()) {
 		AppFeature()
 	}
 

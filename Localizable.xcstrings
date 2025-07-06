@@ -92,6 +92,9 @@
         }
       }
     },
+    "Check Again" : {
+
+    },
     "Check for Updates" : {
       "comment" : "Check for updates button in About section of Settings",
       "localizations" : {
@@ -135,6 +138,9 @@
         }
       }
     },
+    "Copied!" : {
+
+    },
     "Copy to clipboard" : {
       "comment" : "copy transcription from history.",
       "localizations" : {
@@ -146,7 +152,13 @@
         }
       }
     },
+    "Copy to Clipboard" : {
+
+    },
     "Copy transcription text to clipboard in addition to pasting it" : {
+
+    },
+    "Default: http://localhost:11434" : {
 
     },
     "Delete" : {
@@ -197,6 +209,15 @@
         }
       }
     },
+    "Deselect" : {
+
+    },
+    "Deselect All" : {
+
+    },
+    "Done" : {
+
+    },
     "Download" : {
 
     },
@@ -241,6 +262,9 @@
     "Enable in Settings" : {
 
     },
+    "Enable Ollama Integration" : {
+
+    },
     "Ensure Hex can access your microphone and system accessibility features." : {
       "comment" : "Footer for permissions section in settings",
       "localizations" : {
@@ -273,6 +297,12 @@
           }
         }
       }
+    },
+    "Generate Summary" : {
+
+    },
+    "Generating summary with Ollama..." : {
+
     },
     "Granted" : {
       "comment" : "Label title for granted permissions.",
@@ -334,12 +364,14 @@
     "Input Device" : {
 
     },
+    "llama3.2" : {
+
+    },
     "Maximum History Entries" : {
 
     },
     "Microphone" : {
       "comment" : "Microphone permission.",
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -352,7 +384,7 @@
     "Microphone Selection" : {
 
     },
-    "Microphone!" : {
+    "mistral" : {
 
     },
     "Model" : {
@@ -385,6 +417,21 @@
       }
     },
     "Oldest entries will be automatically deleted when limit is reached" : {
+
+    },
+    "Ollama" : {
+
+    },
+    "Ollama Base URL" : {
+
+    },
+    "Ollama is available" : {
+
+    },
+    "Ollama must be running locally to generate summaries. Visit ollama.ai to install Ollama." : {
+
+    },
+    "Ollama not available" : {
 
     },
     "Open on Login" : {
@@ -459,10 +506,16 @@
     "Quit" : {
 
     },
+    "qwen2.5" : {
+
+    },
     "Recommended for custom hotkeys to avoid interfering with normal usage" : {
 
     },
     "Refresh available input devices" : {
+
+    },
+    "Regenerate" : {
 
     },
     "Request Permission" : {
@@ -480,6 +533,12 @@
 
     },
     "Save transcriptions and audio recordings for later access" : {
+
+    },
+    "Select" : {
+
+    },
+    "Select All" : {
 
     },
     "Selected device not connected. System default will be used." : {
@@ -596,6 +655,22 @@
         }
       }
     },
+    "Summary" : {
+
+    },
+    "Summary Generation Failed" : {
+
+    },
+    "Summary of %lld transcription%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Summary of %1$lld transcription%2$@"
+          }
+        }
+      }
+    },
     "Support the developer" : {
 
     },
@@ -615,6 +690,9 @@
           }
         }
       }
+    },
+    "Try Again" : {
+
     },
     "Unlimited" : {
 
@@ -642,6 +720,9 @@
       }
     },
     "Use double-tap only" : {
+
+    },
+    "Use Ollama to generate summaries of selected transcriptions" : {
 
     },
     "Version" : {

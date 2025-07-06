@@ -174,7 +174,8 @@ public struct ModelDownloadFeature {
 		case .fetchModels:
 			return .run { send in
 				do {
-					let recommended = try await transcription.getRecommendedModels().default
+					let recommendedModels = try await transcription.getRecommendedModels()
+					let recommended = recommendedModels.default
 					let names = try await transcription.getAvailableModels()
 					let infos = try await withThrowingTaskGroup(of: ModelInfo.self) { group -> [ModelInfo] in
 						for name in names {

@@ -19,6 +19,11 @@ struct HexSettings: Codable, Equatable {
 	var selectedMicrophoneID: String? = nil
 	var saveTranscriptionHistory: Bool = true
 	var maxHistoryEntries: Int? = nil
+	
+	// Ollama Settings
+	var ollamaEnabled: Bool = false
+	var ollamaModel: String = "llama3.2"
+	var ollamaBaseURL: String = "http://localhost:11434"
 
 	// Define coding keys to match struct properties
 	enum CodingKeys: String, CodingKey {
@@ -37,6 +42,9 @@ struct HexSettings: Codable, Equatable {
 		case selectedMicrophoneID
 		case saveTranscriptionHistory
 		case maxHistoryEntries
+		case ollamaEnabled
+		case ollamaModel
+		case ollamaBaseURL
 	}
 
 	init(
@@ -54,7 +62,10 @@ struct HexSettings: Codable, Equatable {
 		outputLanguage: String? = nil,
 		selectedMicrophoneID: String? = nil,
 		saveTranscriptionHistory: Bool = true,
-		maxHistoryEntries: Int? = nil
+		maxHistoryEntries: Int? = nil,
+		ollamaEnabled: Bool = false,
+		ollamaModel: String = "llama3.2",
+		ollamaBaseURL: String = "http://localhost:11434"
 	) {
 		self.soundEffectsEnabled = soundEffectsEnabled
 		self.hotkey = hotkey
@@ -71,6 +82,9 @@ struct HexSettings: Codable, Equatable {
 		self.selectedMicrophoneID = selectedMicrophoneID
 		self.saveTranscriptionHistory = saveTranscriptionHistory
 		self.maxHistoryEntries = maxHistoryEntries
+		self.ollamaEnabled = ollamaEnabled
+		self.ollamaModel = ollamaModel
+		self.ollamaBaseURL = ollamaBaseURL
 	}
 
 	// Custom decoder that handles missing fields
@@ -104,6 +118,11 @@ struct HexSettings: Codable, Equatable {
 		saveTranscriptionHistory =
 			try container.decodeIfPresent(Bool.self, forKey: .saveTranscriptionHistory) ?? true
 		maxHistoryEntries = try container.decodeIfPresent(Int.self, forKey: .maxHistoryEntries)
+		
+		// Ollama settings
+		ollamaEnabled = try container.decodeIfPresent(Bool.self, forKey: .ollamaEnabled) ?? false
+		ollamaModel = try container.decodeIfPresent(String.self, forKey: .ollamaModel) ?? "llama3.2"
+		ollamaBaseURL = try container.decodeIfPresent(String.self, forKey: .ollamaBaseURL) ?? "http://localhost:11434"
 	}
 }
 

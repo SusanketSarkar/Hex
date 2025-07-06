@@ -303,6 +303,88 @@ struct SettingsView: View {
 						.foregroundColor(.secondary)
 				}
 			}
+			
+			// --- Ollama Section ---
+			Section {
+				Label {
+					Toggle("Enable Ollama Integration", isOn: $store.hexSettings.ollamaEnabled)
+					Text("Use Ollama to generate summaries of selected transcriptions")
+						.font(.caption)
+						.foregroundColor(.secondary)
+				} icon: {
+					Image(systemName: "brain.head.profile")
+				}
+				
+				if store.hexSettings.ollamaEnabled {
+					Label {
+						TextField("Ollama Base URL", text: $store.hexSettings.ollamaBaseURL)
+							.textFieldStyle(.roundedBorder)
+						Text("Default: http://localhost:11434")
+							.font(.caption)
+							.foregroundColor(.secondary)
+					} icon: {
+						Image(systemName: "server.rack")
+					}
+					
+					Label {
+						HStack {
+							Text("Model")
+							Spacer()
+							Picker("Model", selection: $store.hexSettings.ollamaModel) {
+								if store.availableOllamaModels.isEmpty {
+									Text("llama3.2").tag("llama3.2")
+									Text("qwen2.5").tag("qwen2.5")
+									Text("mistral").tag("mistral")
+								} else {
+									ForEach(store.availableOllamaModels, id: \.id) { model in
+										Text(model.name).tag(model.name)
+									}
+								}
+							}
+							.pickerStyle(.menu)
+							.frame(width: 200)
+						}
+					} icon: {
+						Image(systemName: "cpu")
+					}
+					
+					if !store.ollamaAvailable {
+						Label {
+							HStack {
+								Image(systemName: "exclamationmark.triangle")
+									.foregroundColor(.orange)
+								Text("Ollama not available")
+								Spacer()
+								Button("Check Again") {
+									store.send(.checkOllamaAvailability)
+								}
+								.buttonStyle(.bordered)
+							}
+						} icon: {
+							Image(systemName: "antenna.radiowaves.left.and.right.slash")
+						}
+					} else {
+						Label {
+							HStack {
+								Image(systemName: "checkmark.circle")
+									.foregroundColor(.green)
+								Text("Ollama is available")
+								Spacer()
+							}
+						} icon: {
+							Image(systemName: "antenna.radiowaves.left.and.right")
+						}
+					}
+				}
+			} header: {
+				Text("Ollama")
+			} footer: {
+				if store.hexSettings.ollamaEnabled {
+					Text("Ollama must be running locally to generate summaries. Visit ollama.ai to install Ollama.")
+						.font(.footnote)
+						.foregroundColor(.secondary)
+				}
+			}
 		}
 		.formStyle(.grouped)
 		.task {

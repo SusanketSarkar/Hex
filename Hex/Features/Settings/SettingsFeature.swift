@@ -36,6 +36,10 @@ struct SettingsFeature {
 
     // Model Management
     var modelDownload = ModelDownloadFeature.State()
+    
+    // Ollama Integration
+    var availableOllamaModels: [OllamaModel] = []
+    var ollamaAvailable: Bool = false
   }
 
   enum Action: BindableAction {
@@ -64,12 +68,19 @@ struct SettingsFeature {
     
     // History Management
     case toggleSaveTranscriptionHistory(Bool)
+    
+    // Ollama Integration
+    case checkOllamaAvailability
+    case ollamaAvailabilityChecked(Bool)
+    case loadOllamaModels
+    case ollamaModelsLoaded([OllamaModel])
   }
 
   @Dependency(\.keyEventMonitor) var keyEventMonitor
   @Dependency(\.continuousClock) var clock
   @Dependency(\.transcription) var transcription
   @Dependency(\.recording) var recording
+  @Dependency(\.ollama) var ollama
 
   var body: some ReducerOf<Self> {
     BindingReducer()
@@ -102,13 +113,14 @@ struct SettingsFeature {
           await send(.checkPermissions)
           await send(.modelDownload(.fetchModels))
           await send(.loadAvailableInputDevices)
+          await send(.checkOllamaAvailability)
           
           // Set up periodic refresh of available devices (every 120 seconds)
           // Using a longer interval to reduce resource usage
           let deviceRefreshTask = Task { @MainActor in
             for await _ in clock.timer(interval: .seconds(120)) {
               // Only refresh when the app is active to save resources
-              if await NSApplication.shared.isActive {
+              if NSApplication.shared.isActive {
                 await send(.loadAvailableInputDevices)
               }
             }
@@ -315,6 +327,35 @@ struct SettingsFeature {
           }
         }
         
+        return .none
+        
+      // Ollama Integration
+      case .checkOllamaAvailability:
+        return .run { [baseURL = state.hexSettings.ollamaBaseURL] send in
+          let available = await ollama.isAvailable(baseURL)
+          await send(.ollamaAvailabilityChecked(available))
+        }
+        
+      case let .ollamaAvailabilityChecked(available):
+        state.ollamaAvailable = available
+        if available {
+          return .send(.loadOllamaModels)
+        }
+        return .none
+        
+      case .loadOllamaModels:
+        return .run { [baseURL = state.hexSettings.ollamaBaseURL] send in
+          do {
+            let models = try await ollama.getAvailableModels(baseURL)
+            await send(.ollamaModelsLoaded(models))
+          } catch {
+            // Silently fail if can't load models
+            await send(.ollamaModelsLoaded([]))
+          }
+        }
+        
+      case let .ollamaModelsLoaded(models):
+        state.availableOllamaModels = models
         return .none
       }
     }
