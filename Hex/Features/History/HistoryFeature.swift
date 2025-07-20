@@ -276,7 +276,11 @@ struct HistoryFeature {
 				print("🤖 Combined text length: \(combinedText.count) characters")
 				
 				let prompt = """
-				Please provide a concise summary of the following transcribed conversations. Focus on the key topics, decisions, and action items mentioned:
+				Please provide a concise summary of the following transcribed conversations. 
+				Focus on the key topics, decisions, and action items mentioned.
+				Be concise and to the point.
+				Be sure to include all the importtant information.
+				Do not generate any info which is not there in the transcribed conversations.
 
 				\(combinedText)
 

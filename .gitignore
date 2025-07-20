@@ -11,3 +11,8 @@ buildServer.json
 bin
 scripts
 ExportOptions.plist
+
+
+# private md
+HEX_PROJECT_CONTEXT.md
+private.md
